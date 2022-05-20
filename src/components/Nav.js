@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+//Fazer um link para Home path=/
 
 export default function Logo() {
     return(
         <Nav >
-            <h1>CINEFLEX</h1>
+            <Link to="/">CINEFLEX</Link>
         </Nav>
     );
 }
@@ -22,6 +25,12 @@ const Nav = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
+    
+    
+    a {
+        cursor:pointer;
+        text-decoration: none;
+        color: #E8833A;
+    }
 
-    color: #E8833A;
 `
