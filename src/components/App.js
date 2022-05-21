@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Logo from "./Nav";
 import Home from "./Home";
+import Movie from "./Movie";
 import MovieSession from "./MovieSession";
 
 import '../assets/styles/reset.css';
@@ -12,7 +13,8 @@ export default function App() {
       <Logo />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/filme/:movieId" element={<MovieSession />} />
+        <Route path="/filme/:movieId" element={<Movie />} />
+        <Route path="/sessao/:sessionId" element={<MovieSession />} />
       </Routes>
     </BrowserRouter>
   );
