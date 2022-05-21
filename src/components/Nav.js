@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-//Fazer um link para Home path=/
-
 export default function Logo() {
     return(
-        <Nav >
+        <Nav>
             <Link to="/">CINEFLEX</Link>
         </Nav>
     );
