@@ -4,14 +4,10 @@ import Seat from "./Seat";
 
 export default function Seats({ objectArr }) {
 
+  //Fazer o Form, e ver como salvar as informações para tela 4;
+
   const [selectSeat, setSelectSeat] = useState([]);
   
-    function backgroundSelect(item) {
-        return ['red','red'];
-    //fazer 3 condicionais, false, true (partir do isavalible) e passando o selected
-        //Fazer um componente aberto para Seat pode resolver! 
-    }
-
   return (
     <AllSeats>
       {objectArr.map((object, index) => (

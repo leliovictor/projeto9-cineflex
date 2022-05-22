@@ -3,32 +3,12 @@ import {useState} from 'react';
 
 export default function Seat({setSelectSeat, object, selectSeat, children}) {
 
-    const [alreadySelect, setAlreadySelect] = useState(false);
-    const [color, setColor] = useState(object.isAvailable);
-
-    function chooseSeat(obj) {
-        if(obj.isAvailable && !alreadySelect) {
-            setSelectSeat([...selectSeat,obj.name]);
-            setColor(['#8DD7CF','#45BDB0']);
-            setAlreadySelect(true);
-        }
-
-        if(obj.isAvailable && alreadySelect) {
-            setColor(['#C3CFD9','#808F9D']);
-            setAlreadySelect(false);
-        }
-    }
-
-    function colorSeat(str) {
-        if(str === true) return ['#C3CFD9','#808F9D'];
-        if(str === false) return ['#FBE192','#F7C52B'];
-        return color;
-    }
-
-    const okok = '#C3CFD9';
-
+    const [select, setSelect] = useState(false);
+ 
+    //Fazer a ligação do click com selectSeat
+    //Mudar o onclick para chamar uma função, criar ela, para salvar a cadeira e mudar o select
     return(
-        <Chair color={colorSeat(color)} onClick={()=>chooseSeat(object)}>{children}</Chair>
+        <Chair tone={object.isAvailable} select={select} onClick={() => setSelect(!select)}>{children}</Chair>
     );
 }
 
@@ -37,8 +17,8 @@ const Chair = styled.div`
   width: 26px;
   height: 26px;
 
-  background: ${props => okok};
-  border: 1px solid ${props => props.color[1]};
+  background: ${props => props.tone ? (props.select ? "#8DD7CF" : "#C3CFD9") : "#FBE192" };
+  border: 1px solid ${props => props.tone ? (props.select ? "#45BDB0" : "#808F9D") : "#F7C52B" };
   border-radius: 12px;
 
   font-size: 11px;
