@@ -4,11 +4,16 @@ import {useState} from 'react';
 export default function Seat({setSelectSeat, object, selectSeat, children}) {
 
     const [select, setSelect] = useState(false);
+
+    function seatAvailable(boolean) {
+      if(!boolean) return alert("Esse assento não está disponível");
+      setSelect(!select);
+    }
  
     //Fazer a ligação do click com selectSeat
     //Mudar o onclick para chamar uma função, criar ela, para salvar a cadeira e mudar o select
     return(
-        <Chair tone={object.isAvailable} select={select} onClick={() => setSelect(!select)}>{children}</Chair>
+        <Chair tone={object.isAvailable} select={select} onClick={() => seatAvailable(object.isAvailable)}>{children}</Chair>
     );
 }
 

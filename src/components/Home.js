@@ -21,7 +21,7 @@ export default function Home() {
       <H1>Selecione o filme</H1>
       <Content>
         {movies.map((object, index) => (
-          <Link to={`/filme/${object.id}`} key={index}>
+          <Link to={`/sessoes/${object.id}`} key={index}>
             <Poster>
               <img src={object.posterURL} alt={`${object.title} poster`} />
             </Poster>

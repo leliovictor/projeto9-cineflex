@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 //No Children entrará na tela 3 o horário e dia escolhido com h1, h2,h3, sei lá;
 
-export default function Footer({ object, children }) {
+export default function Footer({ posterURL, title, children }) {
   return (
     <Content>
       <MoviePoster>
-        <img src={object.posterURL} alt={`${object.title} poster`} />
+        <img src={posterURL} alt={`${title} poster`} />
       </MoviePoster>
       <Title>
-        <h1>{object.title}</h1>
+        <h1>{title}</h1>
         <h2>
           {children}
         </h2>

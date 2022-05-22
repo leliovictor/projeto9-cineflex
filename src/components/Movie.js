@@ -8,7 +8,6 @@ import Footer from "./Footer";
 //Colocar Link com a Tela 3! Rever comentário no footer
 
 export default function Movie() {
-
   const { movieId } = useParams();
 
   const [session, setSession] = useState([]);
@@ -22,7 +21,7 @@ export default function Movie() {
     promise.then((object) => {
       organizeObject(object);
     });
-    promise.catch(() => alert("Deu Ruim"));
+    promise.catch((Error) => alert("Request API error" + Error));
   }, []);
 
   function organizeObject(object) {
@@ -33,21 +32,23 @@ export default function Movie() {
   return (
     <>
       <H1>Selecione o horário</H1>
+      <section>
       {session.map((objectArr, index) => (
         <Session key={index}>
           <h2>
-            {objectArr.weekday}- {objectArr.date}
+            {objectArr.weekday} - {objectArr.date}
           </h2>
           <Div>
             {objectArr.showtimes.map((object, index) => (
-              <Link to={`/sessao/${object.id}`} key={index}>
+              <Link to={`/assentos/${object.id}`} key={index}>
                 <Hour>{object.name}</Hour>
               </Link>
             ))}
           </Div>
         </Session>
       ))}
-      <Footer object={footer} />
+      </section>
+      <Footer posterURL={footer.posterURL} title={footer.title} />
     </>
   );
 }
@@ -78,6 +79,10 @@ const Session = styled.div`
     padding-bottom: 22px;
 
     color: #293845;
+  }
+
+  :last-child {
+    margin-bottom: 120px;
   }
 `;
 
