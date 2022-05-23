@@ -3,7 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Form({ form, setForm, filmInfo }) {
-  let navigate = useNavigate();
+
+  const navigate = useNavigate();
 
   function handleForm(e) {
     setForm({

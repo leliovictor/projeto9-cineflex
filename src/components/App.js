@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Logo from "./Nav";
+import Nav from "./Nav";
 import Home from "./Home";
 import Movie from "./Movie";
 import MovieSession from "./MovieSession";
@@ -11,7 +11,7 @@ import '../assets/styles/style.css';
 export default function App() {
   return (
     <BrowserRouter>
-      <Logo />
+      <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sessoes/:movieId" element={<Movie />} />
