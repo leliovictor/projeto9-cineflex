@@ -19,7 +19,8 @@ export default function Seat({setSelectSeat, object, selectSeat, children, form,
       setForm({
         ...form,
         'ids':[...form.ids,obj.id],
-        'numberSeat':[...form.numberSeat,obj.name]
+        'numberSeat':[...form.numberSeat,obj.name],
+        'compradores':[...form.compradores,{idAssento:obj.id, nome:'', cpf:''}],
       })
     }
 
@@ -27,7 +28,8 @@ export default function Seat({setSelectSeat, object, selectSeat, children, form,
       setForm({
         ...form,
         'ids':[...form.ids].filter(item => item !== obj.id),
-        'numberSeat':[...form.numberSeat].filter(item => item !== obj.name)
+        'numberSeat':[...form.numberSeat].filter(item => item !== obj.name),
+        'compradores':[...form.compradores].filter(item => item.idAssento !== obj.id),
       })
     }
 

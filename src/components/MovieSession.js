@@ -14,8 +14,7 @@ export default function MovieSesson() {
   
   const [form, setForm] = useState({
     ids:[],
-    name:'',
-    CPF:'',
+    compradores:[],
     numberSeat:[]
   });
 

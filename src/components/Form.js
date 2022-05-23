@@ -1,15 +1,23 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 export default function Form({ form, setForm, filmInfo }) {
 
   const navigate = useNavigate();
 
   function handleForm(e) {
+    
+    const object = {...form.compradores[e.target.id], [(e.target.name)] : e.target.value};
+    
+    let objectArr = [...form.compradores];
+
+    objectArr[e.target.id] = object;
+
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      compradores:objectArr,
     });
   }
 
@@ -18,7 +26,9 @@ export default function Form({ form, setForm, filmInfo }) {
 
     if (form.ids.length === 0) return alert("Escolha seu(s) assento(s)");
 
-    if (form.CPF.length !== 11) return alert("CPF inválido");
+    for(let i = 0; i < form.compradores.length;i++) {
+      if(form.compradores[i].cpf.length !== 11) return alert(`CPF do(a) ${form.compradores[i].nome} inválido, digite apenas os 11 números`);
+    }
 
     sendInformation();
   }
@@ -36,8 +46,7 @@ export default function Form({ form, setForm, filmInfo }) {
           date: filmInfo.day.date,
           hour: filmInfo.name,
           seats: form.numberSeat,
-          person: form.name,
-          CPF: form.CPF,
+          people: form.compradores
         },
       })
     );
@@ -45,26 +54,30 @@ export default function Form({ form, setForm, filmInfo }) {
 
   return (
     <BuyerInfo onSubmit={nextScreen}>
-      <label htmlFor="name">Nome do comprador:</label>
-      <input
-        id="name"
-        type="text"
-        onChange={handleForm}
-        value={form.name}
-        name="name"
-        placeholder="Digite seu nome..."
-        required
-      />
-      <label htmlFor="CPF">CPF do comprador:</label>
-      <input
-        id="CPF"
-        type="number"
-        onChange={handleForm}
-        value={form.CPF}
-        name="CPF"
-        placeholder="Digite seu CPF..."
-        required
-      />
+      {form.ids.map((seat, index) => (
+        <React.Fragment key={index}>
+          <label>Comprador do assento {form.numberSeat[index]}:</label>
+          <input
+            id={index}
+            type="text"
+            onChange={handleForm}
+            value={form.compradores[index].nome}
+            name="nome"
+            placeholder="Digite seu nome..."
+            required
+          />
+          <label>CPF do comprador:</label>
+          <input
+            id={index}
+            type="number"
+            onChange={handleForm}
+            value={form.compradores[index].cpf}
+            name='cpf'
+            placeholder="Digite seu CPF..."
+            required
+          />
+        </React.Fragment>
+      ))}
       <button type="submit">Reservar assento(s)</button>
     </BuyerInfo>
   );
@@ -81,7 +94,7 @@ const BuyerInfo = styled.form`
   letter-spacing: 0.04em;
 
   color: #293845;
-  
+
   input {
     margin-bottom: 7px;
     width: 100%;

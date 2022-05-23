@@ -8,11 +8,11 @@ export default function Sucess() {
   const numbers = location.state.seats.sort((a, b) => a - b);
 
   function styleCPF(numberString) {
-    let arr = numberString.split('');
-    arr.splice(9,0,'-');
-    arr.splice(6,0,'.');
-    arr.splice(3,0,'.');
-    return arr.join('');
+    let arr = numberString.split("");
+    arr.splice(9, 0, "-");
+    arr.splice(6, 0, ".");
+    arr.splice(3, 0, ".");
+    return arr.join("");
   }
 
   return (
@@ -33,11 +33,13 @@ export default function Sucess() {
           <p key={index}>Assento {number}</p>
         ))}
       </div>
-      <h2>Comprador</h2>
-      <div>
-        <p>Nome: {location.state.person}</p>
-        <p>CPF: {styleCPF(location.state.CPF)}</p>
-      </div>
+      <h2>Compradores</h2>
+      {location.state.people.map((person, index) => (
+        <div key={index}>
+          <p>Nome: {person.nome}</p>
+          <p>CPF: {styleCPF(person.cpf)}</p>
+        </div>
+      ))}
       <Link to={"/"}>
         <Button>Voltar pra Home</Button>
       </Link>
@@ -77,11 +79,12 @@ const Section = styled.section`
     font-size: 22px;
     line-height: 26px;
     letter-spacing: 0.04em;
+    margin-bottom: 5px;
 
     color: #293845;
   }
 
-  h1+h2 {
+  h1 + h2 {
     margin-top: 10px;
   }
 `;
