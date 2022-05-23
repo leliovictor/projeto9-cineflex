@@ -2,36 +2,68 @@ import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function Form({form,setForm}) {
-
+export default function Form({ form, setForm, filmInfo }) {
   let navigate = useNavigate();
-  
-  function handleForm (e) {
+
+  function handleForm(e) {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
-    })
+    });
   }
 
-  function nextScreen(e){
+  function nextScreen(e) {
     e.preventDefault();
 
-    if(form.ids.length === 0) return alert("Escolha seu(s) assento(s)");
+    if (form.ids.length === 0) return alert("Escolha seu(s) assento(s)");
 
-    if(form.CPF.length !== 11) return alert("CPF inválido");
+    if (form.CPF.length !== 11) return alert("CPF inválido");
 
-    const promise = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",form)
+    sendInformation();
+  }
 
-    promise.then(() => navigate("/sucesso", {seila: {name:'lelio'}}));
+  function sendInformation() {
+    const promise = axios.post(
+      "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
+      form
+    );
 
+    promise.then(() =>
+      navigate("/sucesso", {
+        state: {
+          title: filmInfo.movie.title,
+          date: filmInfo.day.date,
+          hour: filmInfo.name,
+          seats: form.numberSeat,
+          person: form.name,
+          CPF: form.CPF,
+        },
+      })
+    );
   }
 
   return (
     <BuyerInfo onSubmit={nextScreen}>
       <label htmlFor="name">Nome do comprador:</label>
-      <input id="name" type="text" onChange={handleForm} value={form.name} name="name" placeholder="Digite seu nome..." required />
+      <input
+        id="name"
+        type="text"
+        onChange={handleForm}
+        value={form.name}
+        name="name"
+        placeholder="Digite seu nome..."
+        required
+      />
       <label htmlFor="CPF">CPF do comprador:</label>
-      <input id="CPF" type="number" onChange={handleForm} value={form.CPF} name="CPF" placeholder="Digite seu CPF..." required />
+      <input
+        id="CPF"
+        type="number"
+        onChange={handleForm}
+        value={form.CPF}
+        name="CPF"
+        placeholder="Digite seu CPF..."
+        required
+      />
       <button type="submit">Reservar assento(s)</button>
     </BuyerInfo>
   );
@@ -48,10 +80,7 @@ const BuyerInfo = styled.form`
   letter-spacing: 0.04em;
 
   color: #293845;
-
-  label {
-  }
-
+  
   input {
     margin-bottom: 7px;
     width: 100%;
@@ -87,7 +116,7 @@ const BuyerInfo = styled.form`
     width: 225px;
     height: 42px;
 
-    background: #E8833A;
+    background: #e8833a;
     border-radius: 3px;
     border: none;
     margin: 57px auto 30px auto;

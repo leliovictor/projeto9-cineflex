@@ -11,12 +11,12 @@ export default function MovieSesson() {
 
   const [seats, setSeats] = useState([]);
   const [footer, setFooter] = useState({movie:'',day:''});
-
-
+  
   const [form, setForm] = useState({
     ids:[],
     name:'',
-    CPF:''
+    CPF:'',
+    numberSeat:[]
   });
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function MovieSesson() {
     <>
       <H1>Selecione o(s) assento(s)</H1>
       <Seats objectArr={seats} form={form} setForm={setForm}/>
-      <Form form={form} setForm={setForm}/>
+      <Form form={form} setForm={setForm} filmInfo={footer} />
       <Footer posterURL={footer.movie.posterURL} title ={footer.movie.title}>{`${footer.day.weekday} - ${footer.name}`}</Footer>
     </>
   );

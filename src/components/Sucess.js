@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-export default function Sucess({seila}) {
+export default function Sucess() {
 
-    console.log({seila});
+  const location = useLocation();
 
-    return(
-        <h1>Testeee</h1>
-    );
+  console.log(location.state);
+
+  return <h1>{location.state.person}</h1>;
 }
