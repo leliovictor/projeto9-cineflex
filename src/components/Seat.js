@@ -25,12 +25,17 @@ export default function Seat({setSelectSeat, object, selectSeat, children, form,
     }
 
     function removeSeat(obj) {
+      const text = (`Gostaria de remover o Assento ${obj.name}?`);
+
+      if(window.confirm(text)) {
+
       setForm({
         ...form,
         'ids':[...form.ids].filter(item => item !== obj.id),
         'numberSeat':[...form.numberSeat].filter(item => item !== obj.name),
         'compradores':[...form.compradores].filter(item => item.idAssento !== obj.id),
       })
+    }
     }
 
     return(
