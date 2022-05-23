@@ -3,16 +3,14 @@ import {useState} from "react";
 import Seat from "./Seat";
 import SeatInfo from "./SeatInfo";
 
-export default function Seats({ objectArr }) {
-
-  //Fazer o Form, e ver como salvar as informações para tela 4;
+export default function Seats({ objectArr, form, setForm }) {
 
   const [selectSeat, setSelectSeat] = useState([]);
   
   return (
     <AllSeats>
       {objectArr.map((object, index) => (
-        <Seat key={index} selectSeat={selectSeat} setSelectSeat={setSelectSeat} object={object}>{object.name}</Seat>
+        <Seat key={index} selectSeat={selectSeat} setSelectSeat={setSelectSeat} object={object} form={form} setForm={setForm}>{object.name}</Seat>
       ))}
       <SeatInfo />
     </AllSeats>

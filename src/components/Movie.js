@@ -22,7 +22,9 @@ export default function Movie() {
       organizeObject(object);
     });
     promise.catch((Error) => alert("Request API error" + Error));
-  }, []);
+
+  }, [movieId]);
+
 
   function organizeObject(object) {
     setSession(object.data.days);

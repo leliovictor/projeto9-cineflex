@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Seats from "./Seats";
 import Form from "./Form";
 import Footer from "./Footer";
@@ -13,6 +12,13 @@ export default function MovieSesson() {
   const [seats, setSeats] = useState([]);
   const [footer, setFooter] = useState({movie:'',day:''});
 
+
+  const [form, setForm] = useState({
+    ids:[],
+    name:'',
+    CPF:''
+  });
+
   useEffect(() => {
     const promise = axios.get(
       `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${sessionId}/seats`
@@ -21,7 +27,7 @@ export default function MovieSesson() {
     promise.then((object) => {
       organizeObject(object);
     });
-  }, []);
+  }, [sessionId]);
 
   function organizeObject(object) {
     setSeats(object.data.seats);
@@ -31,8 +37,8 @@ export default function MovieSesson() {
   return (
     <>
       <H1>Selecione o(s) assento(s)</H1>
-      <Seats objectArr={seats} />
-      <Form />
+      <Seats objectArr={seats} form={form} setForm={setForm}/>
+      <Form form={form} setForm={setForm}/>
       <Footer posterURL={footer.movie.posterURL} title ={footer.movie.title}>{`${footer.day.weekday} - ${footer.name}`}</Footer>
     </>
   );

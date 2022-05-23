@@ -1,13 +1,38 @@
 import styled from "styled-components";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export default function Form() {
+export default function Form({form,setForm}) {
+
+  let navigate = useNavigate();
+  
+  function handleForm (e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  function nextScreen(e){
+    e.preventDefault();
+
+    if(form.ids.length === 0) return alert("Escolha seu(s) assento(s)");
+
+    if(form.CPF.length !== 11) return alert("CPF inválido");
+
+    const promise = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",form)
+
+    promise.then(() => navigate("/sucesso", {seila: {name:'lelio'}}));
+
+  }
+
   return (
-    <BuyerInfo>
+    <BuyerInfo onSubmit={nextScreen}>
       <label htmlFor="name">Nome do comprador:</label>
-      <input id="name" type="text" placeholder="Digite seu nome..." required />
+      <input id="name" type="text" onChange={handleForm} value={form.name} name="name" placeholder="Digite seu nome..." required />
       <label htmlFor="CPF">CPF do comprador:</label>
-      <input id="CPF" type="number" placeholder="Digite seu CPF..." required />
-      <button>Reservar assento(s)</button>
+      <input id="CPF" type="number" onChange={handleForm} value={form.CPF} name="CPF" placeholder="Digite seu CPF..." required />
+      <button type="submit">Reservar assento(s)</button>
     </BuyerInfo>
   );
 }
@@ -47,7 +72,7 @@ const BuyerInfo = styled.form`
       font-style: italic;
       font-size: 18px;
       line-height: 21px;
-      padding-left: 18px;
+      padding-left: 14px;
 
       color: #afafaf;
     }

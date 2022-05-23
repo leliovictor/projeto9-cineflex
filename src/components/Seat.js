@@ -1,19 +1,36 @@
 import styled from "styled-components";
 import {useState} from 'react';
 
-export default function Seat({setSelectSeat, object, selectSeat, children}) {
+export default function Seat({setSelectSeat, object, selectSeat, children, form, setForm}) {
 
     const [select, setSelect] = useState(false);
 
-    function seatAvailable(boolean) {
-      if(!boolean) return alert("Esse assento não está disponível");
+    function chooseSeat(obj) {
+      if(!obj.isAvailable) return alert("Esse assento não está disponível");
+      
+      if(!select) addSeat(obj);
+
+      if(select) removeSeat(obj);
+
       setSelect(!select);
     }
- 
-    //Fazer a ligação do click com selectSeat
-    //Mudar o onclick para chamar uma função, criar ela, para salvar a cadeira e mudar o select
+
+    function addSeat(obj) {
+      setForm({
+        ...form,
+        'ids':[...form.ids,obj.id],
+      })
+    }
+
+    function removeSeat(obj) {
+      setForm({
+        ...form,
+        'ids':[...form.ids].filter(item => item !== obj.id),
+      })
+    }
+
     return(
-        <Chair tone={object.isAvailable} select={select} onClick={() => seatAvailable(object.isAvailable)}>{children}</Chair>
+        <Chair tone={object.isAvailable} select={select} onClick={() => chooseSeat(object)}>{children}</Chair>
     );
 }
 
